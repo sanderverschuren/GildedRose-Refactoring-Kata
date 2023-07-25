@@ -10,52 +10,46 @@ class GildedRose {
     public void updateQuality() {
         for (Item item : items) {
 
-            if (!isSulfuras(item)) {
+            if (isSulfuras(item)) {
+                continue;
+            } else {
                 item.sellIn = item.sellIn - 1;
             }
 
             if (isBackstagePass(item)) {
-                if (item.quality < 50) {
-                    item.quality = item.quality + 1;
-
-                    if (item.sellIn < 10) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1;
-                        }
-                    }
-
-                    if (item.sellIn < 5) {
-                        if (item.quality < 50) {
-                            item.quality = item.quality + 1;
-                        }
-                    }
+                increaseQuality(item);
+                if (item.sellIn < 10) {
+                    increaseQuality(item);
+                }
+                if (item.sellIn < 5) {
+                    increaseQuality(item);
                 }
                 if (item.sellIn < 0) {
                     item.quality = 0;
                 }
             } else if (isAgedBrie(item)) {
-                if (item.quality < 50) {
-                    item.quality = item.quality + 1;
-                }
+                increaseQuality(item);
                 if (item.sellIn < 0) {
-                    if (item.quality < 50) {
-                        item.quality = item.quality + 1;
-                    }
+                    increaseQuality(item);
                 }
             } else {
-                if (item.quality > 0) {
-                    if (!isSulfuras(item)) {
-                        item.quality = item.quality - 1;
-                    }
-                }
+                decreaseQuality(item);
                 if (item.sellIn < 0) {
-                    if (item.quality > 0) {
-                        if (!isSulfuras(item)) {
-                            item.quality = item.quality - 1;
-                        }
-                    }
+                    decreaseQuality(item);
                 }
             }
+        }
+    }
+
+    private static void decreaseQuality(Item item) {
+        if (item.quality > 0) {
+            item.quality = item.quality - 1;
+        }
+    }
+
+    private static void increaseQuality(Item item) {
+        if (item.quality < 50) {
+            item.quality = item.quality + 1;
         }
     }
 
