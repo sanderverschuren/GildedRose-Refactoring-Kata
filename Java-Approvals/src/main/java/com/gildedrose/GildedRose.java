@@ -12,11 +12,8 @@ class GildedRose {
 
             if (isSulfuras(item)) {
                 continue;
-            } else {
+            } else if (isBackstagePass(item)) {
                 item.sellIn = item.sellIn - 1;
-            }
-
-            if (isBackstagePass(item)) {
                 increaseQuality(item);
                 if (item.sellIn < 10) {
                     increaseQuality(item);
@@ -28,11 +25,13 @@ class GildedRose {
                     item.quality = 0;
                 }
             } else if (isAgedBrie(item)) {
+                item.sellIn = item.sellIn - 1;
                 increaseQuality(item);
                 if (item.sellIn < 0) {
                     increaseQuality(item);
                 }
             } else {
+                item.sellIn = item.sellIn - 1;
                 decreaseQuality(item);
                 if (item.sellIn < 0) {
                     decreaseQuality(item);
