@@ -20,26 +20,34 @@ class GildedRose {
         if (isSulfuras(item)) {
         } else if (isBackstagePass(item)) {
             increaseQuality(item);
-            if (item.sellIn < 10) {
+            if (expiresInDays(item, 10)) {
                 increaseQuality(item);
             }
-            if (item.sellIn < 5) {
+            if (expiresInDays(item, 5)) {
                 increaseQuality(item);
             }
-            if (item.sellIn < 0) {
+            if (isExpired(item)) {
                 item.quality = 0;
             }
         } else if (isAgedBrie(item)) {
             increaseQuality(item);
-            if (item.sellIn < 0) {
+            if (isExpired(item)) {
                 increaseQuality(item);
             }
         } else {
             decreaseQuality(item);
-            if (item.sellIn < 0) {
+            if (isExpired(item)) {
                 decreaseQuality(item);
             }
         }
+    }
+
+    private static boolean expiresInDays(Item item, int days) {
+        return item.sellIn < days;
+    }
+
+    private static boolean isExpired(Item item) {
+        return expiresInDays(item, 0);
     }
 
     private static void updateSellIn(Item item) {
