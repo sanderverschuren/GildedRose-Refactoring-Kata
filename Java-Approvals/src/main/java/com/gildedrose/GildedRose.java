@@ -22,11 +22,11 @@ class GildedRose {
     }
 
     private static Item updateSellIn(Item item) {
-        int increment = switch (item.name) {
+        int decrement = switch (item.name) {
             case SULFURAS -> 0;
-            default -> -1;
+            default -> 1;
         };
-        return new Item(item.name, item.sellIn + increment, item.quality);
+        return new Item(item.name, item.sellIn - decrement, item.quality);
     }
 
     private static Item updateQuality(Item item) {
@@ -62,10 +62,6 @@ class GildedRose {
         if (increment == 0)
             return item.quality;
         return limitQualityRange(item.quality + increment);
-    }
-
-    private static boolean isSulfuras(Item item) {
-        return item.name.equals(SULFURAS);
     }
 
     private static int limitQualityRange(int value) {
