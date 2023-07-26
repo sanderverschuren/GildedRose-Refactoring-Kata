@@ -3,6 +3,9 @@ package com.gildedrose;
 class GildedRose {
     public static final int MAX_QUALITY = 50;
     public static final int MIN_QUALITY = 0;
+    public static final String BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert";
+    public static final String AGED_BRIE = "Aged Brie";
+    public static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -20,29 +23,33 @@ class GildedRose {
         if (isSulfuras(item)) {
             return;
         }
-        int qualityIncrement = 0;
-        if (isBackstagePass(item)) {
-            if (isExpired(item)) {
-                qualityIncrement = -item.quality;
-            } else if (expiresInDays(item, 5)) {
-                qualityIncrement = 3;
-            } else if (expiresInDays(item, 10)) {
-                qualityIncrement = 2;
-            } else {
-                qualityIncrement = 1;
-            }
-        } else if (isAgedBrie(item)) {
-            if (isExpired(item)) {
-                qualityIncrement = 2;
-            } else {
-                qualityIncrement = 1;
-            }
-        } else {
-            if (isExpired(item)) {
-                qualityIncrement = -2;
-            } else {
-                qualityIncrement = -1;
-            }
+        int qualityIncrement;
+        switch (item.name) {
+            case BACKSTAGE_PASS:
+                if (isExpired(item)) {
+                    qualityIncrement = -item.quality;
+                } else if (expiresInDays(item, 5)) {
+                    qualityIncrement = 3;
+                } else if (expiresInDays(item, 10)) {
+                    qualityIncrement = 2;
+                } else {
+                    qualityIncrement = 1;
+                }
+                break;
+            case AGED_BRIE:
+                if (isExpired(item)) {
+                    qualityIncrement = 2;
+                } else {
+                    qualityIncrement = 1;
+                }
+                break;
+            default:
+                if (isExpired(item)) {
+                    qualityIncrement = -2;
+                } else {
+                    qualityIncrement = -1;
+                }
+                break;
         }
         increaseQuality(item, qualityIncrement);
     }
@@ -67,15 +74,7 @@ class GildedRose {
     }
 
     private static boolean isSulfuras(Item item) {
-        return item.name.equals("Sulfuras, Hand of Ragnaros");
-    }
-
-    private static boolean isBackstagePass(Item item) {
-        return item.name.equals("Backstage passes to a TAFKAL80ETC concert");
-    }
-
-    private static boolean isAgedBrie(Item item) {
-        return item.name.equals("Aged Brie");
+        return item.name.equals(SULFURAS);
     }
 
     private static int limitQualityRange(int value) {
