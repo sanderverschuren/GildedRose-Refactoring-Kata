@@ -1,6 +1,8 @@
 package com.gildedrose;
 
 class GildedRose {
+    public static final int MAX_QUALITY = 50;
+    public static final int MIN_QUALITY = 0;
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -41,13 +43,13 @@ class GildedRose {
     }
 
     private static void decreaseQuality(Item item) {
-        if (item.quality > 0) {
+        if (item.quality > MIN_QUALITY) {
             item.quality = item.quality - 1;
         }
     }
 
     private static void increaseQuality(Item item) {
-        if (item.quality < 50) {
+        if (item.quality < MAX_QUALITY) {
             item.quality = item.quality + 1;
         }
     }
