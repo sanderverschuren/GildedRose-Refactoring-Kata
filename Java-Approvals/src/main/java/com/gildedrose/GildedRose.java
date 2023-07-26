@@ -11,34 +11,41 @@ class GildedRose {
 
     public void endDay() {
         for (Item item : items) {
-            if (isSulfuras(item)) {
-            } else {
-                item.sellIn = item.sellIn - 1;
-            }
+            updateSellIn(item);
+            updateQuality(item);
+        }
+    }
 
-            if (isSulfuras(item)) {
-            } else if (isBackstagePass(item)) {
+    private static void updateQuality(Item item) {
+        if (isSulfuras(item)) {
+        } else if (isBackstagePass(item)) {
+            increaseQuality(item);
+            if (item.sellIn < 10) {
                 increaseQuality(item);
-                if (item.sellIn < 10) {
-                    increaseQuality(item);
-                }
-                if (item.sellIn < 5) {
-                    increaseQuality(item);
-                }
-                if (item.sellIn < 0) {
-                    item.quality = 0;
-                }
-            } else if (isAgedBrie(item)) {
-                increaseQuality(item);
-                if (item.sellIn < 0) {
-                    increaseQuality(item);
-                }
-            } else {
-                decreaseQuality(item);
-                if (item.sellIn < 0) {
-                    decreaseQuality(item);
-                }
             }
+            if (item.sellIn < 5) {
+                increaseQuality(item);
+            }
+            if (item.sellIn < 0) {
+                item.quality = 0;
+            }
+        } else if (isAgedBrie(item)) {
+            increaseQuality(item);
+            if (item.sellIn < 0) {
+                increaseQuality(item);
+            }
+        } else {
+            decreaseQuality(item);
+            if (item.sellIn < 0) {
+                decreaseQuality(item);
+            }
+        }
+    }
+
+    private static void updateSellIn(Item item) {
+        if (isSulfuras(item)) {
+        } else {
+            item.sellIn = item.sellIn - 1;
         }
     }
 
