@@ -18,6 +18,14 @@ class GildedRose {
             updateQuality(item);
         }
     }
+    
+    private static void updateSellIn(Item item) {
+        int increment = switch (item.name) {
+            case SULFURAS -> 0;
+            default -> -1;
+        };
+        item.sellIn = item.sellIn + increment;
+    }
 
     private static void updateQuality(Item item) {
         int qualityIncrement = switch (item.name) {
@@ -46,13 +54,6 @@ class GildedRose {
 
     private static boolean isExpired(Item item) {
         return expiresInDays(item, 0);
-    }
-
-    private static void updateSellIn(Item item) {
-        if (isSulfuras(item)) {
-        } else {
-            item.sellIn = item.sellIn - 1;
-        }
     }
 
     private static void increaseQuality(Item item, int number) {
