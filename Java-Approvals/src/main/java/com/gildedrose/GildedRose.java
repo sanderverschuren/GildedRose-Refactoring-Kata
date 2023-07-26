@@ -22,23 +22,20 @@ class GildedRose {
     private static void updateQuality(Item item) {
         int qualityIncrement = switch (item.name) {
             case SULFURAS -> 0;
-            case BACKSTAGE_PASS ->
-                switch (item) {
-                    case Item i when isExpired(i) -> -item.quality;
-                    case Item i when expiresInDays(i, 5) -> 3;
-                    case Item i when expiresInDays(i, 10) -> 2;
-                    default -> 1;
-                };
-            case AGED_BRIE ->
-                switch (item){
-                    case Item i when isExpired(i) -> 2;
-                    default -> 1;
-                };
-            default ->
-                switch (item){
-                    case Item i when isExpired(i) -> -2;
-                    default -> -1;
-                };
+            case BACKSTAGE_PASS -> switch (item) {
+                case Item i when isExpired(i) -> -item.quality;
+                case Item i when expiresInDays(i, 5) -> 3;
+                case Item i when expiresInDays(i, 10) -> 2;
+                default -> 1;
+            };
+            case AGED_BRIE -> switch (item) {
+                case Item i when isExpired(i) -> 2;
+                default -> 1;
+            };
+            default -> switch (item) {
+                case Item i when isExpired(i) -> -2;
+                default -> -1;
+            };
         };
         increaseQuality(item, qualityIncrement);
     }
