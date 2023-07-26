@@ -18,29 +18,33 @@ class GildedRose {
 
     private static void updateQuality(Item item) {
         if (isSulfuras(item)) {
-        } else if (isBackstagePass(item)) {
+            return;
+        }
+        int qualityIncrement = 0;
+        if (isBackstagePass(item)) {
             if (isExpired(item)) {
-                increaseQuality(item, -item.quality);
+                qualityIncrement = -item.quality;
             } else if (expiresInDays(item, 5)) {
-                increaseQuality(item, 3);
+                qualityIncrement = 3;
             } else if (expiresInDays(item, 10)) {
-                increaseQuality(item, 2);
+                qualityIncrement = 2;
             } else {
-                increaseQuality(item, 1);
+                qualityIncrement = 1;
             }
         } else if (isAgedBrie(item)) {
             if (isExpired(item)) {
-                increaseQuality(item, 2);
+                qualityIncrement = 2;
             } else {
-                increaseQuality(item, 1);
+                qualityIncrement = 1;
             }
         } else {
             if (isExpired(item)) {
-                increaseQuality(item, -2);
+                qualityIncrement = -2;
             } else {
-                increaseQuality(item, -1);
+                qualityIncrement = -1;
             }
         }
+        increaseQuality(item, qualityIncrement);
     }
 
     private static boolean expiresInDays(Item item, int days) {
