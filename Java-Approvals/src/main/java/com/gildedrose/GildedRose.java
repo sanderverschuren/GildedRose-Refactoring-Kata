@@ -8,6 +8,7 @@ class GildedRose {
     public static final String BACKSTAGE_PASS = "Backstage passes to a TAFKAL80ETC concert";
     public static final String AGED_BRIE = "Aged Brie";
     public static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
+    public static final String CONJURED = "Conjured Mana Cake";
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -41,6 +42,10 @@ class GildedRose {
             case AGED_BRIE -> switch (item) {
                 case Item i when isExpired(i) -> 2;
                 default -> 1;
+            };
+            case CONJURED -> switch (item) {
+                case Item i when isExpired(i) -> -4;
+                default -> -2;
             };
             default -> switch (item) {
                 case Item i when isExpired(i) -> -2;
