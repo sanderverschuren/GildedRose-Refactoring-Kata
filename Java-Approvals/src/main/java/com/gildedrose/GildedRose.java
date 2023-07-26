@@ -23,34 +23,25 @@ class GildedRose {
         if (isSulfuras(item)) {
             return;
         }
-        int qualityIncrement;
-        switch (item.name) {
-            case BACKSTAGE_PASS:
-                if (isExpired(item)) {
-                    qualityIncrement = -item.quality;
-                } else if (expiresInDays(item, 5)) {
-                    qualityIncrement = 3;
-                } else if (expiresInDays(item, 10)) {
-                    qualityIncrement = 2;
-                } else {
-                    qualityIncrement = 1;
-                }
-                break;
-            case AGED_BRIE:
-                if (isExpired(item)) {
-                    qualityIncrement = 2;
-                } else {
-                    qualityIncrement = 1;
-                }
-                break;
-            default:
-                if (isExpired(item)) {
-                    qualityIncrement = -2;
-                } else {
-                    qualityIncrement = -1;
-                }
-                break;
-        }
+        int qualityIncrement = switch (item.name) {
+            case BACKSTAGE_PASS ->
+                switch (item) {
+                    case Item i when isExpired(i) -> -item.quality;
+                    case Item i when expiresInDays(i, 5) -> 3;
+                    case Item i when expiresInDays(i, 10) -> 2;
+                    default -> 1;
+                };
+            case AGED_BRIE ->
+                switch (item){
+                    case Item i when isExpired(i) -> 2;
+                    default -> 1;
+                };
+            default ->
+                switch (item){
+                    case Item i when isExpired(i) -> -2;
+                    default -> -1;
+                };
+        };
         increaseQuality(item, qualityIncrement);
     }
 
