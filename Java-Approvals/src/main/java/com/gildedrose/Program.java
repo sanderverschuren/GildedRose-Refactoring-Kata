@@ -26,7 +26,7 @@ public class Program {
 				System.out.println(items[j]);
 			}
 			System.out.println("");
-			app.updateQuality();
+			app.endDay();
 		}
 	}
 }

@@ -8,7 +8,6 @@ import org.approvaltests.Approvals;
 import org.approvaltests.reporters.DiffReporter;
 import org.approvaltests.reporters.UseReporter;
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.Text;
 
 @UseReporter(DiffReporter.class)
 public class GildedRoseApprovalTest {
@@ -18,7 +17,7 @@ public class GildedRoseApprovalTest {
 
         Item[] items = new Item[] { new Item("foo", 0, 0) };
         GildedRose app = new GildedRose(items);
-        app.updateQuality();
+        app.endDay();
 
 //		Approvals.verifyAll("Items", items);
 	}
