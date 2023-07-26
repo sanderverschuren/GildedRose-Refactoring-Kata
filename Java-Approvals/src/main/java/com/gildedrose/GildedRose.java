@@ -35,8 +35,8 @@ class GildedRose {
             case SULFURAS -> 0;
             case BACKSTAGE_PASS -> switch (item) {
                 case Item i when isExpired(i) -> -item.quality;
-                case Item i when expiresInDays(i, 5) -> 3;
-                case Item i when expiresInDays(i, 10) -> 2;
+                case Item i when isExpiredInDays(i, 5) -> 3;
+                case Item i when isExpiredInDays(i, 10) -> 2;
                 default -> 1;
             };
             case AGED_BRIE -> switch (item) {
@@ -55,12 +55,12 @@ class GildedRose {
         return new Item(item.name, item.sellIn, calculateQuality(item, qualityIncrement));
     }
 
-    private static boolean expiresInDays(Item item, int days) {
+    private static boolean isExpiredInDays(Item item, int days) {
         return item.sellIn < days;
     }
 
     private static boolean isExpired(Item item) {
-        return expiresInDays(item, 0);
+        return isExpiredInDays(item, 0);
     }
 
     private static int calculateQuality(Item item, int increment) {
