@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import java.util.Arrays;
+
 class GildedRose {
     public static final int MAX_QUALITY = 50;
     public static final int MIN_QUALITY = 0;
@@ -13,21 +15,21 @@ class GildedRose {
     }
 
     public void endDay() {
-        for (Item item : items) {
-            updateSellIn(item);
-            updateQuality(item);
-        }
+        items = Arrays.stream(items)
+            .map(GildedRose::updateSellIn)
+            .map(GildedRose::updateQuality)
+            .toArray(Item[]::new);
     }
 
-    private static void updateSellIn(Item item) {
+    private static Item updateSellIn(Item item) {
         int increment = switch (item.name) {
             case SULFURAS -> 0;
             default -> -1;
         };
-        item.sellIn = item.sellIn + increment;
+        return new Item(item.name, item.sellIn + increment, item.quality);
     }
 
-    private static void updateQuality(Item item) {
+    private static Item updateQuality(Item item) {
         int qualityIncrement = switch (item.name) {
             case SULFURAS -> 0;
             case BACKSTAGE_PASS -> switch (item) {
@@ -45,7 +47,7 @@ class GildedRose {
                 default -> -1;
             };
         };
-        item.quality = calculateQuality(item, qualityIncrement);
+        return new Item(item.name, item.sellIn, calculateQuality(item, qualityIncrement));
     }
 
     private static boolean expiresInDays(Item item, int days) {
