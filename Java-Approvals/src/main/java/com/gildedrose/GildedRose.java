@@ -45,7 +45,7 @@ class GildedRose {
                 default -> -1;
             };
         };
-        incrementQuality(item, qualityIncrement);
+        item.quality = calculateQuality(item, qualityIncrement);
     }
 
     private static boolean expiresInDays(Item item, int days) {
@@ -56,10 +56,10 @@ class GildedRose {
         return expiresInDays(item, 0);
     }
 
-    private static void incrementQuality(Item item, int number) {
-        if (number == 0)
-            return;
-        item.quality = limitQualityRange(item.quality + number);
+    private static int calculateQuality(Item item, int increment) {
+        if (increment == 0)
+            return item.quality;
+        return limitQualityRange(item.quality + increment);
     }
 
     private static boolean isSulfuras(Item item) {
