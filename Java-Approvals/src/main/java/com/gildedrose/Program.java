@@ -23,7 +23,7 @@ public class Program {
 			System.out.println("-------- day " + i + " --------");
 			System.out.println("name, sellIn, quality");
 			for (int j = 0; j < items.length; j++) {
-				System.out.println(items[j]);
+				System.out.println(app.items[j]);
 			}
 			System.out.println("");
 			app.endDay();
