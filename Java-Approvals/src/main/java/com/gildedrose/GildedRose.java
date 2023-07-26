@@ -19,25 +19,25 @@ class GildedRose {
     private static void updateQuality(Item item) {
         if (isSulfuras(item)) {
         } else if (isBackstagePass(item)) {
-            increaseQuality(item);
+            increaseQuality(item, 1);
             if (expiresInDays(item, 10)) {
-                increaseQuality(item);
+                increaseQuality(item, 1);
             }
             if (expiresInDays(item, 5)) {
-                increaseQuality(item);
+                increaseQuality(item, 1);
             }
             if (isExpired(item)) {
-                item.quality = 0;
+                increaseQuality(item, -item.quality);
             }
         } else if (isAgedBrie(item)) {
-            increaseQuality(item);
+            increaseQuality(item, 1);
             if (isExpired(item)) {
-                increaseQuality(item);
+                increaseQuality(item, 1);
             }
         } else {
-            decreaseQuality(item);
+            increaseQuality(item, -1);
             if (isExpired(item)) {
-                decreaseQuality(item);
+                increaseQuality(item, -1);
             }
         }
     }
@@ -57,16 +57,8 @@ class GildedRose {
         }
     }
 
-    private static void decreaseQuality(Item item) {
-        if (item.quality > MIN_QUALITY) {
-            item.quality = item.quality - 1;
-        }
-    }
-
-    private static void increaseQuality(Item item) {
-        if (item.quality < MAX_QUALITY) {
-            item.quality = item.quality + 1;
-        }
+    private static void increaseQuality(Item item, int number) {
+        item.quality = limitQualityRange(item.quality + number);
     }
 
     private static boolean isSulfuras(Item item) {
@@ -79,5 +71,9 @@ class GildedRose {
 
     private static boolean isAgedBrie(Item item) {
         return item.name.equals("Aged Brie");
+    }
+
+    private static int limitQualityRange(int value) {
+        return Math.min(Math.max(value, MIN_QUALITY), MAX_QUALITY);
     }
 }
