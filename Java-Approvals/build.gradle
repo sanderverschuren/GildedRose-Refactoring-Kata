@@ -15,8 +15,14 @@ dependencies {
 
 group = 'com.gildedrose'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = "20.PREVIEW"
+targetCompatibility = "20.PREVIEW"
 
 test {
     useJUnitPlatform()
+    jvmArgs(['--enable-preview'])
+}
+
+tasks.withType(JavaCompile).each {
+    it.options.compilerArgs.add('--enable-preview')
 }
