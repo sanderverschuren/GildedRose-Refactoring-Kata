@@ -20,10 +20,8 @@ class GildedRose {
     }
 
     private static void updateQuality(Item item) {
-        if (isSulfuras(item)) {
-            return;
-        }
         int qualityIncrement = switch (item.name) {
+            case SULFURAS -> 0;
             case BACKSTAGE_PASS ->
                 switch (item) {
                     case Item i when isExpired(i) -> -item.quality;
@@ -61,6 +59,8 @@ class GildedRose {
     }
 
     private static void increaseQuality(Item item, int number) {
+        if (number == 0)
+            return;
         item.quality = limitQualityRange(item.quality + number);
     }
 
