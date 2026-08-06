@@ -20,6 +20,7 @@ dependencies {
 	implementation(kotlin("stdlib"))
 	testImplementation(kotlin("test"))
 	testImplementation("org.junit.jupiter:junit-jupiter:5.12.2")
+	testImplementation("com.approvaltests:approvaltests:31.0.0")
 }
 
 tasks.test {

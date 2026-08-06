@@ -1,17 +1,31 @@
 package com.gildedrose
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.approvaltests.Approvals
 import org.junit.jupiter.api.Test
+import java.io.ByteArrayOutputStream
+import java.io.PrintStream
 
 internal class GildedRoseTest {
 
     @Test
-    fun foo() {
-        val items = listOf(Item("foo", 0, 0))
-        val app = GildedRose(items)
-        app.updateQuality()
-        assertEquals("fixme", app.items[0].name)
+    fun thirtyDays() {
+        val output = captureStdout {
+            main(arrayOf("30"))
+        }
 
+        Approvals.verify(output)
+    }
+
+    private fun captureStdout(block: () -> Unit): String {
+        val originalOut = System.out
+        val buffer = ByteArrayOutputStream()
+        System.setOut(PrintStream(buffer))
+        try {
+            block()
+        } finally {
+            System.setOut(originalOut)
+        }
+        return buffer.toString()
     }
 
 }
