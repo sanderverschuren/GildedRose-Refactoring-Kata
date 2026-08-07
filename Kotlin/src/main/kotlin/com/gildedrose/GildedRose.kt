@@ -24,24 +24,24 @@ private fun calculateSellIn(item: Item): Int = when (item.name) {
 
 private fun calculateQuality(item: Item): Int = when (item.name) {
     SULFURAS -> 80
-    AGED_BRIE -> agedBrieQuality(item)
-    BACKSTAGE_PASSES -> backstagePassesQuality(item)
-    else -> normalItemQuality(item)
+    AGED_BRIE -> calculateAgedBrieQuality(item)
+    BACKSTAGE_PASSES -> calculateBackstagePassesQuality(item)
+    else -> calculateNormalItemQuality(item)
 }
 
-private fun agedBrieQuality(item: Item): Int {
+private fun calculateAgedBrieQuality(item: Item): Int {
     val increase = if (item.isExpired) 2 else 1
     return (item.quality + increase).coerceIn(0, 50)
 }
 
-private fun backstagePassesQuality(item: Item): Int = when {
+private fun calculateBackstagePassesQuality(item: Item): Int = when {
     item.isExpired -> 0
     item.sellIn < 5 -> item.quality + 3
     item.sellIn < 10 -> item.quality + 2
     else -> item.quality + 1
 }.coerceIn(0, 50)
 
-private fun normalItemQuality(item: Item): Int {
+private fun calculateNormalItemQuality(item: Item): Int {
     val degradation = if (item.isExpired) 2 else 1
     return (item.quality - degradation).coerceIn(0, 50)
 }
