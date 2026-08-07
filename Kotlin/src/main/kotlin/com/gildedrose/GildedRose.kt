@@ -1,6 +1,6 @@
 package com.gildedrose
 
-private val Item.expired get() = sellIn < 0
+private val Item.isExpired get() = sellIn < 0
 
 class GildedRose(val items: List<Item>) {
 
@@ -17,7 +17,7 @@ class GildedRose(val items: List<Item>) {
 
     private fun updateAgedBrie(item: Item) {
         item.sellIn--
-        val increase = if (item.expired) 2 else 1
+        val increase = if (item.isExpired) 2 else 1
         item.quality = (item.quality + increase).coerceAtMost(50)
     }
 
@@ -28,12 +28,12 @@ class GildedRose(val items: List<Item>) {
             else -> item.quality + 1
         }.coerceAtMost(50)
         item.sellIn--
-        if (item.expired) item.quality = 0
+        if (item.isExpired) item.quality = 0
     }
 
     private fun updateNormalItem(item: Item) {
         item.sellIn--
-        val degradation = if (item.expired) 2 else 1
+        val degradation = if (item.isExpired) 2 else 1
         item.quality = (item.quality - degradation).coerceAtLeast(0)
     }
 
