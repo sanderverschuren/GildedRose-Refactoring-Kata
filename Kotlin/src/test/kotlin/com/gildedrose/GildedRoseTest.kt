@@ -20,32 +20,32 @@ internal class GildedRoseTest {
 
     @Test
     fun `Backstage passes with negative quality should be corrected to 0`() {
-        val items = listOf(Item(BACKSTAGE_PASSES, 15, -5))
-        val app = GildedRose(items)
+        val item = Item(BACKSTAGE_PASSES, 15, -5)
+        val app = GildedRose(listOf(item))
 
         app.updateQuality()
 
-        assertEquals(0, items[0].quality)
+        assertItemsEqual(item, Item(BACKSTAGE_PASSES, 14, 0))
     }
 
     @Test
     fun `Normal item with quality above 50 should be corrected to 50`() {
-        val items = listOf(Item("normal item", 10, 55))
-        val app = GildedRose(items)
+        val item = Item("normal item", 10, 55)
+        val app = GildedRose(listOf(item))
 
         app.updateQuality()
 
-        assertEquals(50, items[0].quality)
+        assertItemsEqual(item, Item("normal item", 9, 50))
     }
 
     @Test
     fun `Sulfuras quality is always 80`() {
-        val items = listOf(Item(SULFURAS, 0, 40))
-        val app = GildedRose(items)
+        val item = Item(SULFURAS, 0, 40)
+        val app = GildedRose(listOf(item))
 
         app.updateQuality()
 
-        assertEquals(80, items[0].quality)
+        assertItemsEqual(item, Item(SULFURAS, 0, 80))
     }
 
     @Test
