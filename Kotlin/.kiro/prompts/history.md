@@ -101,3 +101,11 @@
 ## 25. Updating prompt history
 
 > Update my prompt history so it is up to date
+
+## 26. Alternative solution from scratch using polymorphism
+
+> Let's create an alternative solution from scratch that will still adhere to the requirements, the existing tests and to the `backwards-compatibility.md`. The code must comply with the `clean-code.md` steering file. Do not be influence by the current implementation.
+
+## 27. Updating prompt history
+
+> Update the prompt history

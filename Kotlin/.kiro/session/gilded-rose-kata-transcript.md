@@ -835,3 +835,45 @@ Update my prompt history so it is up to date
 ## Kiro
 
 Done. The prompt history is now up to date with all 25 prompts from both sessions.
+
+## User
+
+Let's create an alternative solution from scratch that will still adhere to the requirements, the existing tests and to the `backwards-compatibility.md`. The code must comply with the `clean-code.md` steering file. Do not be influence by the current implementation.
+
+## Kiro
+
+Now I have all the constraints clear. Let me design a fresh solution using **polymorphism** (as recommended by the clean-code steering: "Prefer polymorphism to if/else or switch/case"):
+
+**Design:**
+- An `ItemUpdater` interface with a single method `update(item: Item)` 
+- Concrete implementations for each item type: `AgedBrieUpdater`, `BackstagePassUpdater`, `ConjuredItemUpdater`, `NormalItemUpdater`, `LegendaryItemUpdater`
+- A factory function to resolve which updater handles which item
+- `GildedRose.updateQuality()` delegates to the appropriate updater per item
+- Quality bounds encapsulated in one place
+
+All tests pass. Let me commit:
+
+Done. Here's the alternative solution:
+
+**Design:**
+- `ItemUpdater` interface with a single `update(item: Item)` method
+- Five concrete `object` implementations — each encapsulates the rules for one item type
+- `updaterFor(item)` factory function resolves the correct strategy by name
+- `GildedRose.updateQuality()` is a one-liner that delegates to the appropriate updater
+
+**Clean-code principles applied:**
+- **Polymorphism over if/else** — no when-expressions for quality logic, each type is its own object
+- **Single Responsibility** — each updater does exactly one thing
+- **Open/Closed** — adding a new item type means adding one new object, no existing code changes
+- **Named constants** — `MIN_QUALITY`, `MAX_QUALITY`, `LEGENDARY_QUALITY`
+- **Small functions** — each updater's `update` method is 3-4 lines
+- **No flag arguments** — no booleans passed around
+- **Domain language** — `item.expired` extension property
+
+## User
+
+Update the prompt history
+
+## Kiro
+
+Done. Prompt history is up to date.
