@@ -49,7 +49,7 @@ internal class GildedRoseTest {
     }
 
     @Test
-    fun thirtyDays() {
+    fun goldenMasterTest() {
         val output = captureStdout {
             main(arrayOf("30"))
         }
