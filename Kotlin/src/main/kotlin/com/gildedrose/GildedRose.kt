@@ -7,10 +7,13 @@ const val SULFURAS = "Sulfuras, Hand of Ragnaros"
 class GildedRose(val items: List<Item>) {
 
     fun updateQuality() {
-        for (item in items) {
-            item.sellIn = calculateSellIn(item)
-            item.quality = calculateQuality(item)
-        }
+        items.forEach { updateItemSellInAndQuality(it) }
+    }
+
+    private fun updateItemSellInAndQuality(item: Item): Item {
+        item.sellIn = calculateSellIn(item)
+        item.quality = calculateQuality(item)
+        return item
     }
 
     private fun calculateSellIn(item: Item): Int = when (item.name) {
