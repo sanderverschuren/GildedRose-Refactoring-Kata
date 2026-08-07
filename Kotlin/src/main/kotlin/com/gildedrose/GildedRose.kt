@@ -6,18 +6,19 @@ class GildedRose(val items: List<Item>) {
 
     fun updateQuality() {
         for (item in items) {
-            when (item.name) {
-                "Sulfuras, Hand of Ragnaros" -> {} // legendary: never changes
-                else -> {
-                    item.sellIn--
-                    updateItemQuality(item)
-                }
-            }
+            updateSellIn(item)
+            updateItemQuality(item)
         }
+    }
+
+    private fun updateSellIn(item: Item) {
+        if (item.name == "Sulfuras, Hand of Ragnaros") return
+        item.sellIn--
     }
 
     private fun updateItemQuality(item: Item) {
         when (item.name) {
+            "Sulfuras, Hand of Ragnaros" -> {} // legendary: never changes
             "Aged Brie" -> updateAgedBrie(item)
             "Backstage passes to a TAFKAL80ETC concert" -> updateBackstagePasses(item)
             else -> updateNormalItem(item)
