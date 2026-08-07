@@ -10,16 +10,20 @@ class GildedRose(val items: List<Item>) {
 
     fun updateQuality() {
         for (item in items) {
-            if (item.name == SULFURAS) continue
-
-            item.sellIn--
+            item.sellIn = calculateSellIn(item)
             item.quality = calculateQuality(item)
         }
     }
 
 }
 
+private fun calculateSellIn(item: Item): Int = when (item.name) {
+    SULFURAS -> item.sellIn
+    else -> item.sellIn - 1
+}
+
 private fun calculateQuality(item: Item): Int = when (item.name) {
+    SULFURAS -> item.quality
     AGED_BRIE -> agedBrieQuality(item)
     BACKSTAGE_PASSES -> backstagePassesQuality(item)
     else -> normalItemQuality(item)
