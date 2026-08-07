@@ -10,12 +10,13 @@ internal class GildedRoseTest {
 
     @Test
     fun `Aged Brie with negative quality should be corrected to 0`() {
-        val items = listOf(Item("Aged Brie", 3, -5))
-        val app = GildedRose(items)
+        val item = Item("Aged Brie", 3, -5)
+        val app = GildedRose(listOf(item))
 
         app.updateQuality()
 
-        assertEquals(0, items[0].quality)
+        val expected = Item("Aged Brie", 2, 0)
+        assertEquals(expected.toString(), item.toString())
     }
 
     @Test
