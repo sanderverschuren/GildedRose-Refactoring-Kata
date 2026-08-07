@@ -1,5 +1,9 @@
 package com.gildedrose
 
+private const val AGED_BRIE = "Aged Brie"
+private const val BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert"
+private const val SULFURAS = "Sulfuras, Hand of Ragnaros"
+
 private val Item.isExpired get() = sellIn < 0
 
 class GildedRose(val items: List<Item>) {
@@ -12,15 +16,15 @@ class GildedRose(val items: List<Item>) {
     }
 
     private fun updateSellIn(item: Item) {
-        if (item.name == "Sulfuras, Hand of Ragnaros") return
+        if (item.name == SULFURAS) return
         item.sellIn--
     }
 
     private fun updateItemQuality(item: Item) {
         when (item.name) {
-            "Sulfuras, Hand of Ragnaros" -> {} // legendary: never changes
-            "Aged Brie" -> updateAgedBrie(item)
-            "Backstage passes to a TAFKAL80ETC concert" -> updateBackstagePasses(item)
+            SULFURAS -> return
+            AGED_BRIE -> updateAgedBrie(item)
+            BACKSTAGE_PASSES -> updateBackstagePasses(item)
             else -> updateNormalItem(item)
         }
     }
