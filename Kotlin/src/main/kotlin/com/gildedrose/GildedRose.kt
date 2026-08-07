@@ -3,6 +3,7 @@ package com.gildedrose
 const val AGED_BRIE = "Aged Brie"
 const val BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert"
 const val SULFURAS = "Sulfuras, Hand of Ragnaros"
+const val CONJURED = "Conjured Mana Cake"
 
 class GildedRose(val items: List<Item>) {
 
@@ -25,6 +26,7 @@ class GildedRose(val items: List<Item>) {
         SULFURAS -> 80
         AGED_BRIE -> calculateAgedBrieQuality(item)
         BACKSTAGE_PASSES -> calculateBackstagePassesQuality(item)
+        CONJURED -> calculateConjuredItemQuality(item)
         else -> calculateNormalItemQuality(item)
     }
 
@@ -42,6 +44,11 @@ class GildedRose(val items: List<Item>) {
 
     private fun calculateNormalItemQuality(item: Item): Int {
         val degradation = if (item.isExpired) 2 else 1
+        return (item.quality - degradation).coerceIn(0, 50)
+    }
+
+    private fun calculateConjuredItemQuality(item: Item): Int {
+        val degradation = if (item.isExpired) 4 else 2
         return (item.quality - degradation).coerceIn(0, 50)
     }
 
