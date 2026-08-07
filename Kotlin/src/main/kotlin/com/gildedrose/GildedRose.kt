@@ -5,7 +5,7 @@ class GildedRose(val items: List<Item>) {
     fun updateQuality() {
         for (item in items) {
             when (item.name) {
-                "Sulfuras, Hand of Ragnaros" -> {}
+                "Sulfuras, Hand of Ragnaros" -> {} // legendary: never changes
                 "Aged Brie" -> updateAgedBrie(item)
                 "Backstage passes to a TAFKAL80ETC concert" -> updateBackstagePasses(item)
                 else -> updateNormalItem(item)
@@ -14,25 +14,25 @@ class GildedRose(val items: List<Item>) {
     }
 
     private fun updateAgedBrie(item: Item) {
-        if (item.quality < 50) item.quality++
         item.sellIn--
-        if (item.sellIn < 0 && item.quality < 50) item.quality++
+        val increase = if (item.sellIn < 0) 2 else 1
+        item.quality = (item.quality + increase).coerceAtMost(50)
     }
 
     private fun updateBackstagePasses(item: Item) {
-        if (item.quality < 50) {
-            item.quality++
-            if (item.sellIn < 11 && item.quality < 50) item.quality++
-            if (item.sellIn < 6 && item.quality < 50) item.quality++
-        }
+        item.quality = when {
+            item.sellIn <= 5 -> item.quality + 3
+            item.sellIn <= 10 -> item.quality + 2
+            else -> item.quality + 1
+        }.coerceAtMost(50)
         item.sellIn--
         if (item.sellIn < 0) item.quality = 0
     }
 
     private fun updateNormalItem(item: Item) {
-        if (item.quality > 0) item.quality--
         item.sellIn--
-        if (item.sellIn < 0 && item.quality > 0) item.quality--
+        val degradation = if (item.sellIn < 0) 2 else 1
+        item.quality = (item.quality - degradation).coerceAtLeast(0)
     }
 
 }
