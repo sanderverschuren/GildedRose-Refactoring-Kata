@@ -31,7 +31,7 @@ private fun calculateQuality(item: Item): Int = when (item.name) {
 
 private fun agedBrieQuality(item: Item): Int {
     val increase = if (item.isExpired) 2 else 1
-    return (item.quality + increase).coerceAtMost(50)
+    return (item.quality + increase).coerceIn(0, 50)
 }
 
 private fun backstagePassesQuality(item: Item): Int = when {
